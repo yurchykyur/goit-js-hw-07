@@ -1,4 +1,3 @@
-import { galleryItems } from './gallery-items.js';
 // Change code below this line
 // console.log(galleryItems);
 
@@ -43,6 +42,9 @@ import { galleryItems } from './gallery-items.js';
 // Додай закриття модального вікна після натискання клавіші Escape. 
 // ++ Зроби так, щоб прослуховування клавіатури було тільки доти, доки відкрите модальне вікно. 
 // Бібліотека basicLightbox містить метод для програмного закриття модального вікна.
+
+import { galleryItems } from './gallery-items.js';
+
 
 const refs = {
     gallery: document.querySelector('.gallery'),
@@ -123,9 +125,7 @@ function onEscKeyDown(e) {
     console.log(e)
  if (e.code === 'Escape') {
     removeListenWindowKeydown();
-    basicLightbox.create(`
-		<img width="1280"  src="${src}">
-	`).close();
+    
 
  };
 };
