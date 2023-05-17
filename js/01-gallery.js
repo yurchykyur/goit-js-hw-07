@@ -36,7 +36,17 @@ const refs = {
 
 const instance = basicLightbox.create(`
 <img width="1280"  src="">
-`);
+`, {
+onShow: (instance) => {
+  // and triggers the Window Keydown tracking function
+  window.addEventListener('keydown', onEscKeyDown);
+},
+onClose: (instance) => {
+  // remove EventListener on Window by Keydown
+  window.removeEventListener('keydown', onEscKeyDown);
+  
+}
+});
 
 const galleryItemsMarksup = createGalleryItemsMarksup(galleryItems);
 
@@ -45,7 +55,7 @@ refs.gallery.insertAdjacentHTML('beforeend', galleryItemsMarksup);
 refs.gallery.addEventListener('click', onGalleryItemClick);
 
 /**
- * tracks a click on a gallery image and triggers the Window Keydown tracking function,
+ * tracks a click on a gallery image ,
  * the vendor launch function whose parameter is href
  * @param {Click} event
  * @returns stops execution of the function if the condition is not met
@@ -58,8 +68,6 @@ function onGalleryItemClick(event) {
   if (!isGalleryItemElemImage) {
     return;
   }
-
-  addtListenWindowKeydown();
 
   openImageInBasicLightbox(event.target.closest('.gallery__link').href);
 }
@@ -92,15 +100,8 @@ function createGalleryItemsMarksup(galleryItems) {
  * @param {String} src link to large image
  */
 function openImageInBasicLightbox(src) {
-  console.log((instance.element().querySelector('img').src = src));
+  (instance.element().querySelector('img').src = src);
   instance.show();
-}
-
-/**
- * add EventListener on window by keydown
- */
-function addtListenWindowKeydown() {
-  window.addEventListener('keydown', onEscKeyDown);
 }
 
 /**
@@ -110,15 +111,8 @@ function addtListenWindowKeydown() {
  * @param {keydown} e
  */
 function onEscKeyDown(e) {
+  console.log(e)
   if (e.code === 'Escape') {
-    removeListenWindowKeydown();
-    instance.close();
+    instance.close();    
   }
-}
-
-/**
- * remove EventListener on window by keydown
- */
-function removeListenWindowKeydown() {
-  window.removeEventListener('keydown', onEscKeyDown);
 }
